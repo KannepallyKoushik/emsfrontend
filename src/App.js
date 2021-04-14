@@ -5,8 +5,10 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+import axios from "./axios";
 // Components
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -15,14 +17,21 @@ import Dashboard from "./components/Dashboard";
 function App() {
   const checkAuthenticated = async () => {
     try {
-      const res = await fetch("http://localhost:5000/authentication/verify", {
-        method: "POST",
-        headers: { jwt_token: localStorage.token },
-      });
-
-      const parseRes = await res.json();
-
-      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      axios
+        .post(
+          "/auth/isverify",
+          { dummybody: "dummy" },
+          {
+            headers: { token: localStorage.token },
+            "Content-type": "application/json",
+          }
+        )
+        .then((res) => {
+          const parseRes = res.data;
+          parseRes === true
+            ? setIsAuthenticated(true)
+            : setIsAuthenticated(false);
+        });
     } catch (err) {
       console.error(err.message);
     }
@@ -49,6 +58,28 @@ function App() {
                 <SignIn {...props} setAuth={setAuth} />
               ) : (
                 <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/register"
+            render={(props) =>
+              !isAuthenticated ? (
+                <SignUp {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            render={(props) =>
+              isAuthenticated ? (
+                <Dashboard {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/login" />
               )
             }
           />
