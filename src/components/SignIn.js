@@ -15,6 +15,28 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+function AdminLogin() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      <Link color="inherit" to="/admin/login">
+        Sign In
+      </Link>{" "}
+      {" as an Admininstrator"}
+    </Typography>
+  );
+}
+
+function Report() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Report an Issue with the Website "}
+      <Link color="inherit" to="/report">
+        Here
+      </Link>{" "}
+    </Typography>
+  );
+}
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -101,6 +123,9 @@ const SignIn = ({ setAuth }) => {
 
   return (
     <div className={classes.body}>
+      <Box mt={8}>
+          <AdminLogin />
+        </Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -108,7 +133,7 @@ const SignIn = ({ setAuth }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign In
           </Typography>
           <form className={classes.form} noValidate onSubmit={onSubmitForm}>
             <TextField
@@ -161,6 +186,7 @@ const SignIn = ({ setAuth }) => {
         </div>
 
         <Box mt={8}>
+          <Report />
           <Copyright />
         </Box>
       </Container>
