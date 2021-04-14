@@ -62,6 +62,7 @@ const SignUp = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
+
     try {
       const body = {
         email,
@@ -104,7 +105,7 @@ const SignUp = ({ setAuth }) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmitForm}>
+        <form className={classes.form} Validate onSubmit={onSubmitForm}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
