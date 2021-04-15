@@ -1,7 +1,10 @@
-import axios from "../axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useFormik } from "formik";
 import { Link } from "react-router-dom";
+
 import "../App.css";
+import axios from "../axios";
+import ReportValidator from "./Validators/ReportValidator";
 
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -20,44 +23,40 @@ function Copyright() {
 }
 
 export default function ReportForm() {
-  const [inputs, setInputs] = useState({
+  const initialValues = {
     name: "",
     email: "",
     message: "",
-  });
-
-  const { name, email, message } = inputs;
-
-  const onChange = (e) =>
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-
-  const onSubmitForm = async (e) => {
-    e.preventDefault();
-    try {
-      const body = { name, email, message };
-      axios
-        .post("/auth/report", body, {
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-        .then((res) => {
-          const data = res.data;
-          const status = res.status;
-          console.log(status);
-          console.log(data);
-          if (status === 200 || 201) {
-            document.getElementById("form-message-success").style.visibility =
-              "visible";
-          } else if (status === 500 || 503 || 502) {
-            document.getElementById("form-message-failure").style.visibility =
-              "visible";
-          }
-        });
-    } catch (error) {
-      console.error(error.message);
-    }
   };
+  const formik = useFormik({
+    initialValues,
+    validationSchema: ReportValidator,
+    onSubmit: (body) => {
+      try {
+        axios
+          .post("/auth/report", body, {
+            headers: {
+              "Content-type": "application/json",
+            },
+          })
+          .then((res) => {
+            const data = res.data;
+            const status = res.status;
+            console.log(status);
+            console.log(data);
+            if (status === 200 || 201) {
+              document.getElementById("form-message-success").style.visibility =
+                "visible";
+            } else if (status === 500 || 503 || 502) {
+              document.getElementById("form-message-failure").style.visibility =
+                "visible";
+            }
+          });
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+  });
 
   useEffect(() => {
     document.getElementById("form-message-success").style.visibility = "hidden";
@@ -75,7 +74,7 @@ export default function ReportForm() {
                 class="mb-5"
                 id="contactForm"
                 name="contactForm"
-                onSubmit={onSubmitForm}
+                onSubmit={formik.handleSubmit}
               >
                 <div class="row">
                   <div class="col-md-6 form-group mb-5">
@@ -88,9 +87,12 @@ export default function ReportForm() {
                       name="name"
                       id="name"
                       placeholder="Your name"
-                      value={name}
-                      onChange={(e) => onChange(e)}
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
                     />
+                    {formik.errors.name && formik.touched.name && (
+                      <p class="errors">{formik.errors.name}</p>
+                    )}
                   </div>
                   <div class="col-md-6 form-group mb-5">
                     <label for="" class="col-form-label">
@@ -102,9 +104,12 @@ export default function ReportForm() {
                       name="email"
                       id="email"
                       placeholder="Your email"
-                      value={email}
-                      onChange={(e) => onChange(e)}
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
                     />
+                    {formik.errors.email && formik.touched.email && (
+                      <p class="errors">{formik.errors.email}</p>
+                    )}
                   </div>
                 </div>
 
@@ -120,9 +125,12 @@ export default function ReportForm() {
                       cols="30"
                       rows="10"
                       placeholder="Describe your issue"
-                      value={message}
-                      onChange={(e) => onChange(e)}
+                      value={formik.values.message}
+                      onChange={formik.handleChange}
                     ></textarea>
+                    {formik.errors.message && formik.touched.message && (
+                      <p class="errors">{formik.errors.message}</p>
+                    )}
                   </div>
                 </div>
                 <div class="row">

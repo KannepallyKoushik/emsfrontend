@@ -171,3 +171,8 @@ label.error {
   font-size: 12px;
   color: #000;
 }
+
+.errors {
+  color: #ef4339;
+  font-size: 13px;
+}
