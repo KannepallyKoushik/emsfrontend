@@ -13,6 +13,8 @@ import axios from "./axios";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
+import AdminSignIn from "./components/AdminSignIn";
+import ReportForm from "./components/ReportForm";
 
 function App() {
   const checkAuthenticated = async () => {
@@ -56,6 +58,22 @@ function App() {
             render={(props) =>
               !isAuthenticated ? (
                 <SignIn {...props} setAuth={setAuth} />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/report"
+            render={(props) => <ReportForm {...props} />}
+          />
+          <Route
+            exact
+            path="/admin/login"
+            render={(props) =>
+              !isAuthenticated ? (
+                <AdminSignIn {...props} setAuth={setAuth} />
               ) : (
                 <Redirect to="/dashboard" />
               )

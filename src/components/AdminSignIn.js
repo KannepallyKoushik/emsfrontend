@@ -15,13 +15,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-function AdminLogin() {
+function StudentLogin() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      <Link color="inherit" to="/admin/login">
+      <Link color="inherit" to="/login">
         Sign In
       </Link>{" "}
-      {" as Admininstrator"}
+      {" as a Student"}
     </Typography>
   );
 }
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = ({ setAuth }) => {
+const AdminSignIn = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -95,7 +95,7 @@ const SignIn = ({ setAuth }) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const body = { email, password, role: "student" };
+      const body = { email, password, role: "admin" };
       axios
         .post("/auth/login", body, {
           headers: {
@@ -123,7 +123,7 @@ const SignIn = ({ setAuth }) => {
   return (
     <div className={classes.body}>
       <Box mt={8}>
-        <AdminLogin />
+        <StudentLogin />
       </Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -132,7 +132,7 @@ const SignIn = ({ setAuth }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign In as Student
+            Sign In as Admin
           </Typography>
           <form className={classes.form} noValidate onSubmit={onSubmitForm}>
             <TextField
@@ -177,9 +177,6 @@ const SignIn = ({ setAuth }) => {
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link to="/register">{"Don't have an account? Sign Up"}</Link>
-              </Grid>
             </Grid>
           </form>
         </div>
@@ -193,4 +190,4 @@ const SignIn = ({ setAuth }) => {
   );
 };
 
-export default SignIn;
+export default AdminSignIn;
