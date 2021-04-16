@@ -176,3 +176,8 @@ label.error {
   color: #ef4339;
   font-size: 13px;
 }
+
+#signup-failure1 {
+  color: #ef4339;
+  font-size: 14px;
+}

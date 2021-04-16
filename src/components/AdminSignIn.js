@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../axios";
@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminSignIn = ({ setAuth }) => {
+  const [error, setError] = useState("");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -108,15 +109,26 @@ const AdminSignIn = ({ setAuth }) => {
             localStorage.setItem("token", parseRes.token);
             setAuth(true);
             toast.success("LoggedIn Successfully");
-          } else {
-            setAuth(false);
-            toast.error(parseRes);
           }
+        })
+        .catch((er) => {
+          setAuth(false);
+          const status = er.response.status;
+          const errData = er.response.data;
+          document.getElementById("signup-failure1").style.visibility =
+            "visible";
+          console.log("response error code", status);
+          setError(errData);
         });
     } catch (err) {
       console.error(err.message);
     }
   };
+
+  useEffect(() => {
+    document.getElementById("signup-success").style.visibility = "hidden";
+    document.getElementById("signup-failure1").style.visibility = "hidden";
+  }, []);
 
   const classes = useStyles();
 
@@ -134,6 +146,8 @@ const AdminSignIn = ({ setAuth }) => {
           <Typography component="h1" variant="h5">
             Sign In as Admin
           </Typography>
+          <div id="signup-success">User Registered Successfully!</div>
+          <div id="signup-failure1">{error}</div>
           <form className={classes.form} noValidate onSubmit={onSubmitForm}>
             <TextField
               variant="outlined"

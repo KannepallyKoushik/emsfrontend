@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
@@ -50,26 +50,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = ({setAuth}) =>  {
+const SignUp = ({ setAuth }) => {
+  const [error, setError] = useState("");
   const initialValues = {
     fname: "",
     lname: "",
-    email: "",    
+    email: "",
     password: "",
-    confirmpass: ""
+    confirmpass: "",
   };
   const formik = useFormik({
     initialValues,
     validationSchema: SignupValidator,
     onSubmit: (body) => {
       try {
-        const {fname, lname, email, password} = body;
+        const { fname, lname, email, password } = body;
         const reqbody = {
-          name: fname + " " + lname, 
+          name: fname + " " + lname,
           email: email,
           password: password,
-          role: "student"
-        }
+          role: "student",
+        };
         console.log(reqbody);
         axios
           .post("/auth/register", reqbody, {
@@ -79,28 +80,23 @@ const SignUp = ({setAuth}) =>  {
           })
           .then((res) => {
             const parseRes = res.data;
-            const status = res.status;
-            console.log(status);
-            if ((status === 201 || 200) && (parseRes.token)) {
+
+            if (parseRes.token) {
               //succesful signup
               localStorage.setItem("token", parseRes.token);
-              console.log(parseRes);
-              setAuth(true); 
-            } else if (status === 401) {
-              //user already exists
-              console.log(status);
-              setAuth(false);
-              document.getElementById("signup-failure1").style.visibility =
-                "visible";
-            } else if (status === 403) {
-              //cannot signup as admin
-              setAuth(false);
-              document.getElementById("signup-failure2").style.visibility =
-                "visible";
+              setAuth(true);
             }
+          })
+          .catch((err) => {
+            setAuth(false);
+            const status = err.response.status;
+            const errData = err.response.data;
+            document.getElementById("signup-failure1").style.visibility =
+              "visible";
+            console.log("response error code", status);
+            setError(errData);
           });
-      } 
-      catch (error) {
+      } catch (error) {
         console.error(error.message);
       }
     },
@@ -109,7 +105,6 @@ const SignUp = ({setAuth}) =>  {
   useEffect(() => {
     document.getElementById("signup-success").style.visibility = "hidden";
     document.getElementById("signup-failure1").style.visibility = "hidden";
-    document.getElementById("signup-failure2").style.visibility = "hidden";
   }, []);
 
   const classes = useStyles();
@@ -124,6 +119,8 @@ const SignUp = ({setAuth}) =>  {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
+        <div id="signup-success">User Registered Successfully!</div>
+        <div id="signup-failure1">{error}</div>
         <br></br>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -141,7 +138,7 @@ const SignUp = ({setAuth}) =>  {
                 onChange={formik.handleChange}
               />
               {formik.errors.fname && formik.touched.fname && (
-                      <p class="errors">{formik.errors.fname}</p>
+                <p class="errors">{formik.errors.fname}</p>
               )}
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -170,7 +167,7 @@ const SignUp = ({setAuth}) =>  {
                 onChange={formik.handleChange}
               />
               {formik.errors.email && formik.touched.email && (
-                      <p class="errors">{formik.errors.email}</p>
+                <p class="errors">{formik.errors.email}</p>
               )}
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -187,7 +184,7 @@ const SignUp = ({setAuth}) =>  {
                 onChange={formik.handleChange}
               />
               {formik.errors.password && formik.touched.password && (
-                      <p class="errors">{formik.errors.password}</p>
+                <p class="errors">{formik.errors.password}</p>
               )}
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -204,7 +201,7 @@ const SignUp = ({setAuth}) =>  {
                 onChange={formik.handleChange}
               />
               {formik.errors.confirmpass && formik.touched.confirmpass && (
-                      <p class="errors">{formik.errors.confirmpass}</p>
+                <p class="errors">{formik.errors.confirmpass}</p>
               )}
             </Grid>
           </Grid>
@@ -217,16 +214,8 @@ const SignUp = ({setAuth}) =>  {
           >
             Sign Up
           </Button>
+
           <Grid container justify="flex-end">
-          <div id="signup-success">
-                User Registered Successfully!
-          </div>
-          <div id="signup-failure1">
-                User already Registered!
-          </div>
-          <div id="signup-failure2">
-                Cannot signup as Administrator!
-          </div>
             <Grid item>
               <Link to="/login" variant="body2">
                 Already have an account? Sign in
