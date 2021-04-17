@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import "../App.css";
 import axios from "../axios";
@@ -50,18 +50,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChangePass = () => {
+const ChangePass = ({ match }) => {
+  const [error, setError] = useState("");
   const initialValues = {
     password: "",
     confirmpass: "",
   };
+  const history = useHistory();
   const formik = useFormik({
     initialValues,
     validationSchema: ChangePassValidator,
-    onSubmit: (body) => {},
+    onSubmit: (body) => {
+      const reqBody = {
+        encryptedID: match.params.id,
+        password: body.password,
+      };
+      axios
+        .post("/auth/changePassword", reqBody, {
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          const status = res.status;
+          if (status === 200 || 201) {
+            alert("You have successfully changed your password");
+            history.push("/login");
+          }
+        })
+        .catch((er) => {
+          const status = er.response.status;
+          const errData = er.response.data;
+          document.getElementById("changepassword-failure").style.visibility =
+            "visible";
+          console.log("response error code", status);
+          setError(errData);
+        });
+    },
   });
 
   const classes = useStyles();
+
+  useEffect(() => {
+    document.getElementById("changepassword-failure").style.visibility =
+      "hidden";
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,6 +106,7 @@ const ChangePass = () => {
         <Typography component="h1" variant="h5">
           Change Password
         </Typography>
+        <div id="changepassword-failure">{error}</div>
         <br></br>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>

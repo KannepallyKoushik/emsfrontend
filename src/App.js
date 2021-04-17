@@ -61,7 +61,7 @@ function App() {
           />
           <Route
             exact
-            path="/changePassword"
+            path="/changePassword/:id"
             render={(props) => <ChangePass {...props} />}
           />
           <Route

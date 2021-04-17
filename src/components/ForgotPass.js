@@ -87,7 +87,7 @@ const ForgotPass = () => {
 
             if (status === 200 || 201) {
               alert("Reset Password link sent to your email.");
-              console.log("After alert");
+
               history.push("/login");
             }
           })
