@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import "../App.css";
 import axios from "../axios";
@@ -61,8 +61,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = ({ setAuth }) => {
+const SignUp = () => {
   const [error, setError] = useState("");
+  const history = useHistory();
   const initialValues = {
     fname: "",
     lname: "",
@@ -91,15 +92,10 @@ const SignUp = ({ setAuth }) => {
           })
           .then((res) => {
             const parseRes = res.data;
-
-            if (parseRes.token) {
-              //succesful signup
-              localStorage.setItem("token", parseRes.token);
-              setAuth(true);
-            }
+            alert(parseRes);
+            history.push("/login");
           })
           .catch((err) => {
-            setAuth(false);
             const status = err.response.status;
             const errData = err.response.data;
             document.getElementById("signup-failure1").style.visibility =

@@ -17,6 +17,7 @@ import AdminSignIn from "./components/AdminSignIn";
 import ReportForm from "./components/ReportForm";
 import ChangePass from "./components/ChangePass";
 import ForgotPass from "./components/ForgotPass";
+import VerifyEmail from "./components/VerifyEmail";
 
 function App() {
   const checkAuthenticated = async () => {
@@ -82,6 +83,11 @@ function App() {
           />
           <Route
             exact
+            path="/verifyEmail/:id"
+            render={(props) => <VerifyEmail {...props} />}
+          />
+          <Route
+            exact
             path="/admin/login"
             render={(props) =>
               !isAuthenticated ? (
@@ -96,7 +102,7 @@ function App() {
             path="/register"
             render={(props) =>
               !isAuthenticated ? (
-                <SignUp {...props} setAuth={setAuth} />
+                <SignUp {...props} />
               ) : (
                 <Redirect to="/dashboard" />
               )
