@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import "../App.css";
 import axios from "../axios";
@@ -65,11 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ForgotPass = ({ setredirect }) => {
+const ForgotPass = () => {
   const [error, setError] = useState("");
   const initialValues = {
     email: "",
   };
+  const history = useHistory();
   const formik = useFormik({
     initialValues,
     validationSchema: ForgotPassValidator,
@@ -82,17 +83,15 @@ const ForgotPass = ({ setredirect }) => {
             },
           })
           .then((res) => {
-            const data = res.data;
             const status = res.status;
-            console.log(status);
-            console.log(data);
+
             if (status === 200 || 201) {
               alert("Reset Password link sent to your email.");
-              setredirect(true);
+              console.log("After alert");
+              history.push("/login");
             }
           })
           .catch((er) => {
-            setredirect(false);
             const status = er.response.status;
             const errData = er.response.data;
             document.getElementById("forgotpassword-failure").style.visibility =

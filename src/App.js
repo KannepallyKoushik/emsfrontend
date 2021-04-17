@@ -43,11 +43,9 @@ function App() {
 
   useEffect(() => {
     checkAuthenticated();
-    setredirect(false);
   }, []);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [redirect, setredirect] = useState(false);
 
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
@@ -59,13 +57,7 @@ function App() {
           <Route
             exact
             path="/forgotPassword"
-            render={(props) =>
-              redirect ? (
-                <Redirect to="/login" />
-              ) : (
-                <ForgotPass {...props} setredirect={setredirect} />
-              )
-            }
+            render={(props) => <ForgotPass {...props} />}
           />
           <Route
             exact
