@@ -65,17 +65,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ForgotPass = () => {
+const ForgotPass = ({ setredirect }) => {
+  const [error, setError] = useState("");
   const initialValues = {
     email: "",
   };
   const formik = useFormik({
     initialValues,
     validationSchema: ForgotPassValidator,
-    onSubmit: (body) => {},
+    onSubmit: (body) => {
+      try {
+        axios
+          .post("/auth/forgotpassword", body, {
+            headers: {
+              "Content-type": "application/json",
+            },
+          })
+          .then((res) => {
+            const data = res.data;
+            const status = res.status;
+            console.log(status);
+            console.log(data);
+            if (status === 200 || 201) {
+              alert("Reset Password link sent to your email.");
+              setredirect(true);
+            }
+          })
+          .catch((er) => {
+            setredirect(false);
+            const status = er.response.status;
+            const errData = er.response.data;
+            document.getElementById("forgotpassword-failure").style.visibility =
+              "visible";
+            console.log("response error code", status);
+            setError(errData);
+          });
+      } catch (err) {
+        console.error(err.message);
+      }
+    },
   });
 
   const classes = useStyles();
+
+  useEffect(() => {
+    document.getElementById("forgotpassword-failure").style.visibility =
+      "hidden";
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -90,6 +126,7 @@ const ForgotPass = () => {
         <Typography component="h1" variant="h5">
           Get a Password Reset Link
         </Typography>
+        <div id="forgotpassword-failure">{error}</div>
         <br></br>
         <br></br>
         <form onSubmit={formik.handleSubmit}>
@@ -121,7 +158,6 @@ const ForgotPass = () => {
           >
             Submit
           </Button>
-
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login" variant="body2">

@@ -82,7 +82,7 @@ const SignUp = ({ setAuth }) => {
           password: password,
           role: "student",
         };
-        console.log(reqbody);
+
         axios
           .post("/auth/register", reqbody, {
             headers: {

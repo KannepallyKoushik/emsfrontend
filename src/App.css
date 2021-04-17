@@ -181,3 +181,7 @@ label.error {
   color: #ef4339;
   font-size: 14px;
 }
+#forgotpassword-failure {
+  color: #ef4339;
+  font-size: 14px;
+}
