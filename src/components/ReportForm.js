@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import axios from "../axios";
 import ReportValidator from "./Validators/ReportValidator";
+import Header from "./Header";
 
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
@@ -64,6 +65,8 @@ export default function ReportForm() {
   }, []);
 
   return (
+    <div>
+    <Header />
     <div class="content">
       <div class="container">
         <div class="row align-items-stretch no-gutters contact-wrap">
@@ -161,6 +164,7 @@ export default function ReportForm() {
       <Box mt={8}>
         <Copyright />
       </Box>
+    </div>
     </div>
   );
 }
