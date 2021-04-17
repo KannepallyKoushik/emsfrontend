@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "../App.css";
 import axios from "../axios";
-import SignupValidator from "./Validators/SignupValidator";
+import ChangePassValidator from "./Validators/ChangePassValidator";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -30,17 +30,6 @@ function Copyright() {
   );
 }
 
-function Report() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Report an Issue with the Website "}
-      <Link color="inherit" to="/report">
-        Here
-      </Link>{" "}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(5),
@@ -61,62 +50,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUp = ({ setAuth }) => {
-  const [error, setError] = useState("");
+const ChangePass = () => {
   const initialValues = {
-    fname: "",
-    lname: "",
-    email: "",
     password: "",
     confirmpass: "",
   };
   const formik = useFormik({
     initialValues,
-    validationSchema: SignupValidator,
-    onSubmit: (body) => {
-      try {
-        const { fname, lname, email, password } = body;
-        const reqbody = {
-          name: fname + " " + lname,
-          email: email,
-          password: password,
-          role: "student",
-        };
-        console.log(reqbody);
-        axios
-          .post("/auth/register", reqbody, {
-            headers: {
-              "Content-type": "application/json",
-            },
-          })
-          .then((res) => {
-            const parseRes = res.data;
-
-            if (parseRes.token) {
-              //succesful signup
-              localStorage.setItem("token", parseRes.token);
-              setAuth(true);
-            }
-          })
-          .catch((err) => {
-            setAuth(false);
-            const status = err.response.status;
-            const errData = err.response.data;
-            document.getElementById("signup-failure1").style.visibility =
-              "visible";
-            console.log("response error code", status);
-            setError(errData);
-          });
-      } catch (error) {
-        console.error(error.message);
-      }
-    },
+    validationSchema: ChangePassValidator,
+    onSubmit: (body) => {},
   });
-
-  useEffect(() => {
-    document.getElementById("signup-success").style.visibility = "hidden";
-    document.getElementById("signup-failure1").style.visibility = "hidden";
-  }, []);
 
   const classes = useStyles();
 
@@ -128,60 +71,12 @@ const SignUp = ({ setAuth }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Change Password
         </Typography>
-        <div id="signup-success">User Registered Successfully!</div>
-        <div id="signup-failure1">{error}</div>
         <br></br>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="fname"
-                variant="outlined"
-                required
-                fullWidth
-                id="fname"
-                label="First Name"
-                autoFocus
-                value={formik.values.fname}
-                onChange={formik.handleChange}
-              />
-              {formik.errors.fname && formik.touched.fname && (
-                <p class="errors">{formik.errors.fname}</p>
-              )}
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lname"
-                label="Last Name"
-                name="lname"
-                autoComplete="lname"
-                value={formik.values.lname}
-                onChange={formik.handleChange}
-              />
-            </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-              {formik.errors.email && formik.touched.email && (
-                <p class="errors">{formik.errors.email}</p>
-              )}
-            </Grid>
-            <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -198,7 +93,7 @@ const SignUp = ({ setAuth }) => {
                 <p class="errors">{formik.errors.password}</p>
               )}
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -223,24 +118,23 @@ const SignUp = ({ setAuth }) => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Change Password
           </Button>
 
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login" variant="body2">
-                Already have an account? Sign in
+                Remember your Password? Sign In
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Report />
+      <Box mt={5}>
         <Copyright />
       </Box>
     </Container>
   );
 };
 
-export default SignUp;
+export default ChangePass;

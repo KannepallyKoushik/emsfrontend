@@ -51,22 +51,17 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
-  body: {
-    overflow: "hidden",
-  },
-  bg: {
-    opacity: 0.6,
-    position: "absolute",
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: "auto",
-  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "#f0f0f5",
+    paddingTop: "10px",
+    paddingBottom: "40px",
+    paddingLeft: "20px",
+    paddingRight: "20px",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -144,7 +139,7 @@ const AdminSignIn = ({ setAuth }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign In as Admin
+            Sign In as Administrator
           </Typography>
           <div id="signup-success">User Registered Successfully!</div>
           <div id="signup-failure1">{error}</div>

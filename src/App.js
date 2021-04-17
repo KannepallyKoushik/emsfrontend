@@ -15,6 +15,8 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import AdminSignIn from "./components/AdminSignIn";
 import ReportForm from "./components/ReportForm";
+import ChangePass from "./components/ChangePass";
+import ForgotPass from "./components/ForgotPass";
 
 function App() {
   const checkAuthenticated = async () => {
@@ -52,6 +54,16 @@ function App() {
     <Fragment>
       <Router>
         <Switch>
+          <Route
+            exact
+            path="/forgotPassword"
+            render={(props) => <ForgotPass {...props} />}
+          />
+          <Route
+            exact
+            path="/changePassword"
+            render={(props) => <ChangePass {...props} />}
+          />
           <Route
             exact
             path="/login"
