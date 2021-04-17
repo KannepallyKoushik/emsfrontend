@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import axios from "./axios";
 // Components
+import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
@@ -55,6 +56,11 @@ function App() {
     <Fragment>
       <Router>
         <Switch>
+        <Route
+            exact
+            path="/"
+            render={(props) => <Home {...props} />}
+          />
           <Route
             exact
             path="/forgotPassword"
