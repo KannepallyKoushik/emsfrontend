@@ -103,8 +103,8 @@ const SignUp = () => {
             console.log("response error code", status);
             setError(errData);
           });
-      } catch (error) {
-        console.error(error.message);
+      } catch (er) {
+        console.error(er.message);
       }
     },
   });
