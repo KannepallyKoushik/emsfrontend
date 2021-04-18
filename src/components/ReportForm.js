@@ -48,10 +48,13 @@ export default function ReportForm() {
             if (status === 200 || 201) {
               document.getElementById("form-message-success").style.visibility =
                 "visible";
-            } else if (status === 500 || 503 || 502) {
-              document.getElementById("form-message-failure").style.visibility =
-                "visible";
             }
+          })
+          .catch((err) => {
+            const status = err.response.data;
+            console.log(status);
+            document.getElementById("form-message-failure").style.visibility =
+              "visible";
           });
       } catch (error) {
         console.error(error.message);
@@ -66,105 +69,105 @@ export default function ReportForm() {
 
   return (
     <div>
-    <Header />
-    <div class="content">
-      <div class="container">
-        <div class="row align-items-stretch no-gutters contact-wrap">
-          <div class="col-md-12">
-            <div class="form h-100">
-              <h3>Report any Issue with the Site</h3>
-              <form
-                class="mb-5"
-                id="contactForm"
-                name="contactForm"
-                onSubmit={formik.handleSubmit}
-              >
-                <div class="row">
-                  <div class="col-md-6 form-group mb-5">
-                    <label for="" class="col-form-label">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="name"
-                      id="name"
-                      placeholder="Your name"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.name && formik.touched.name && (
-                      <p class="errors">{formik.errors.name}</p>
-                    )}
+      <Header />
+      <div class="content">
+        <div class="container">
+          <div class="row align-items-stretch no-gutters contact-wrap">
+            <div class="col-md-12">
+              <div class="form h-100">
+                <h3>Report any Issue with the Site</h3>
+                <form
+                  class="mb-5"
+                  id="contactForm"
+                  name="contactForm"
+                  onSubmit={formik.handleSubmit}
+                >
+                  <div class="row">
+                    <div class="col-md-6 form-group mb-5">
+                      <label for="" class="col-form-label">
+                        Name *
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        placeholder="Your name"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.name && formik.touched.name && (
+                        <p class="errors">{formik.errors.name}</p>
+                      )}
+                    </div>
+                    <div class="col-md-6 form-group mb-5">
+                      <label for="" class="col-form-label">
+                        Email *
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="email"
+                        id="email"
+                        placeholder="Your email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.errors.email && formik.touched.email && (
+                        <p class="errors">{formik.errors.email}</p>
+                      )}
+                    </div>
                   </div>
-                  <div class="col-md-6 form-group mb-5">
-                    <label for="" class="col-form-label">
-                      Email *
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Your email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                    />
-                    {formik.errors.email && formik.touched.email && (
-                      <p class="errors">{formik.errors.email}</p>
-                    )}
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md-12 form-group mb-5">
-                    <label for="message" class="col-form-label">
-                      Explain Issue *
-                    </label>
-                    <textarea
-                      class="form-control"
-                      name="message"
-                      id="message"
-                      cols="30"
-                      rows="10"
-                      placeholder="Describe your issue"
-                      value={formik.values.message}
-                      onChange={formik.handleChange}
-                    ></textarea>
-                    {formik.errors.message && formik.touched.message && (
-                      <p class="errors">{formik.errors.message}</p>
-                    )}
+                  <div class="row">
+                    <div class="col-md-12 form-group mb-5">
+                      <label for="message" class="col-form-label">
+                        Explain Issue *
+                      </label>
+                      <textarea
+                        class="form-control"
+                        name="message"
+                        id="message"
+                        cols="30"
+                        rows="10"
+                        placeholder="Describe your issue"
+                        value={formik.values.message}
+                        onChange={formik.handleChange}
+                      ></textarea>
+                      {formik.errors.message && formik.touched.message && (
+                        <p class="errors">{formik.errors.message}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12 form-group">
-                    <input
-                      type="submit"
-                      value="Send"
-                      class="btn btn-primary rounded-0 py-2 px-4"
-                    />
-                    <span class="submitting"></span>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <input
+                        type="submit"
+                        value="Send"
+                        class="btn btn-primary rounded-0 py-2 px-4"
+                      />
+                      <span class="submitting"></span>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
 
-              <div id="form-message-failure">
-                Sorry, could not send your message. Try again!
-              </div>
-              <div id="form-message-success">
-                Your message was sent, thank you!
-              </div>
-              <div>
-                Already have an account? <Link to="/login">Sign In</Link>
+                <div id="form-message-failure">
+                  Sorry, could not send your message. Try again!
+                </div>
+                <div id="form-message-success">
+                  Your message was sent, thank you!
+                </div>
+                <div>
+                  Already have an account? <Link to="/login">Sign In</Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </div>
     </div>
   );
 }
