@@ -33,7 +33,6 @@ export default function ReportForm() {
     initialValues,
     validationSchema: ReportValidator,
     onSubmit: (body) => {
-      try {
         axios
           .post("/auth/report", body, {
             headers: {
@@ -56,9 +55,6 @@ export default function ReportForm() {
             document.getElementById("form-message-failure").style.visibility =
               "visible";
           });
-      } catch (error) {
-        console.error(error.message);
-      }
     },
   });
 

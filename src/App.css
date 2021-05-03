@@ -52,7 +52,6 @@
 
 .btn {
   border: none;
-  border-radius: 0;
   font-size: 11px;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
@@ -91,9 +90,7 @@
 .contact-wrap .contact-info {
   padding: 40px;
 }
-.contact-wrap .contact-info {
-  color: rgba(255, 255, 255, 0.5);
-}
+
 .contact-wrap .contact-info ul li {
   margin-bottom: 15px;
   color: rgba(255, 255, 255, 0.5);

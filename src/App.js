@@ -22,25 +22,24 @@ import VerifyEmail from "./components/VerifyEmail";
 
 function App() {
   const checkAuthenticated = async () => {
-    try {
-      axios
-        .post(
-          "/auth/isverify",
-          { dummybody: "dummy" },
-          {
-            headers: { token: localStorage.token },
-            "Content-type": "application/json",
-          }
-        )
-        .then((res) => {
-          const parseRes = res.data;
-          parseRes === true
-            ? setIsAuthenticated(true)
-            : setIsAuthenticated(false);
-        });
-    } catch (err) {
-      console.error(err.message);
-    }
+    axios
+      .post(
+        "/auth/isverify",
+        { dummybody: "dummy" },
+        {
+          headers: { token: localStorage.token },
+          "Content-type": "application/json",
+        }
+      )
+      .then((res) => {
+        const parseRes = res.data;
+        parseRes === true
+          ? setIsAuthenticated(true)
+          : setIsAuthenticated(false);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
   };
 
   useEffect(() => {
@@ -56,11 +55,7 @@ function App() {
     <Fragment>
       <Router>
         <Switch>
-        <Route
-            exact
-            path="/"
-            render={(props) => <Home {...props} />}
-          />
+          <Route exact path="/" render={(props) => <Home {...props} />} />
           <Route
             exact
             path="/forgotPassword"

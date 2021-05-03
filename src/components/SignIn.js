@@ -41,7 +41,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" to="/login">
+      <Link color="inherit" to="/">
         Elective Management System
       </Link>{" "}
       {new Date().getFullYear()}
@@ -90,7 +90,6 @@ const SignIn = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    try {
       const body = { email, password, role: "student" };
       axios
         .post("/auth/login", body, {
@@ -115,9 +114,6 @@ const SignIn = ({ setAuth }) => {
           console.log("response error code", status);
           setError(errData);
         });
-    } catch (err) {
-      console.error(err.message);
-    }
   };
 
   useEffect(() => {

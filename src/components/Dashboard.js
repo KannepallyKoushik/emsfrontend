@@ -37,7 +37,6 @@ const Dashboard = ({ setAuth }) => {
   };
 
   const getData = async () => {
-    try {
       axios
         .post(
           "/dashboard/",
@@ -55,9 +54,6 @@ const Dashboard = ({ setAuth }) => {
         .catch((er) => {
           console.log(er.response.data);
         });
-    } catch (error) {
-      console.error(error.message);
-    }
   };
 
   useEffect(() => {
