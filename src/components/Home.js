@@ -22,7 +22,7 @@ function Copyright() {
     );
   }
 
-export default function App() {
+export default function Home() {
   return (
     <div className="App">
         <Header />

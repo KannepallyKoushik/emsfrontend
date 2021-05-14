@@ -21,7 +21,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" to="/login">
+      <Link color="inherit" to="/">
         Elective Management System
       </Link>{" "}
       {new Date().getFullYear()}
@@ -75,7 +75,6 @@ const SignUp = () => {
     initialValues,
     validationSchema: SignupValidator,
     onSubmit: (body) => {
-      try {
         const { fname, lname, email, password } = body;
         const reqbody = {
           name: fname + " " + lname,
@@ -103,9 +102,6 @@ const SignUp = () => {
             console.log("response error code", status);
             setError(errData);
           });
-      } catch (er) {
-        console.error(er.message);
-      }
     },
   });
 

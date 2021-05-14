@@ -90,7 +90,6 @@ const AdminSignIn = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    try {
       const body = { email, password, role: "admin" };
       axios
         .post("/auth/login", body, {
@@ -115,9 +114,6 @@ const AdminSignIn = ({ setAuth }) => {
           console.log("response error code", status);
           setError(errData);
         });
-    } catch (err) {
-      console.error(err.message);
-    }
   };
 
   useEffect(() => {

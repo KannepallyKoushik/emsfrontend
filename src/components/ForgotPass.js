@@ -75,7 +75,6 @@ const ForgotPass = () => {
     initialValues,
     validationSchema: ForgotPassValidator,
     onSubmit: (body) => {
-      try {
         axios
           .post("/auth/forgotpassword", body, {
             headers: {
@@ -99,9 +98,6 @@ const ForgotPass = () => {
             console.log("response error code", status);
             setError(errData);
           });
-      } catch (err) {
-        console.error(err.message);
-      }
     },
   });
 
