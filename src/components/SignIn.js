@@ -15,40 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-function AdminLogin() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      <Link color="inherit" to="/admin/login">
-        Sign In
-      </Link>{" "}
-      {" as Admininstrator"}
-    </Typography>
-  );
-}
-
-function Report() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Report an Issue with the Website "}
-      <Link color="inherit" to="/report">
-        Here
-      </Link>{" "}
-    </Typography>
-  );
-}
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" to="/">
-        Elective Management System
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Report, Copyright } from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -90,30 +57,29 @@ const SignIn = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-      const body = { email, password, role: "student" };
-      axios
-        .post("/auth/login", body, {
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-        .then((res) => {
-          const parseRes = res.data;
-          if (parseRes.token) {
-            localStorage.setItem("token", parseRes.token);
-            setAuth(true);
-            toast.success("LoggedIn Successfully");
-          }
-        })
-        .catch((er) => {
-          setAuth(false);
-          const status = er.response.status;
-          const errData = er.response.data;
-          document.getElementById("signup-failure1").style.visibility =
-            "visible";
-          console.log("response error code", status);
-          setError(errData);
-        });
+    const body = { email, password, role: "student" };
+    axios
+      .post("/auth/login", body, {
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        const parseRes = res.data;
+        if (parseRes.token) {
+          localStorage.setItem("token", parseRes.token);
+          setAuth(true);
+          toast.success("LoggedIn Successfully");
+        }
+      })
+      .catch((er) => {
+        setAuth(false);
+        const status = er.response.status;
+        const errData = er.response.data;
+        document.getElementById("signup-failure1").style.visibility = "visible";
+        console.log("response error code", status);
+        setError(errData);
+      });
   };
 
   useEffect(() => {
@@ -125,9 +91,6 @@ const SignIn = ({ setAuth }) => {
 
   return (
     <div className={classes.body}>
-      <Box mt={8}>
-        <AdminLogin />
-      </Box>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -135,7 +98,7 @@ const SignIn = ({ setAuth }) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign In as Student
+            Student Sign In
           </Typography>
           <div id="signup-success">User Registered Successfully!</div>
           <div id="signup-failure1">{error}</div>

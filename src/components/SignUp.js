@@ -17,29 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" to="/">
-        Elective Management System
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-function Report() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Report an Issue with the Website "}
-      <Link color="inherit" to="/report">
-        Here
-      </Link>{" "}
-    </Typography>
-  );
-}
+import { Report, Copyright } from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,33 +53,33 @@ const SignUp = () => {
     initialValues,
     validationSchema: SignupValidator,
     onSubmit: (body) => {
-        const { fname, lname, email, password } = body;
-        const reqbody = {
-          name: fname + " " + lname,
-          email: email,
-          password: password,
-          role: "student",
-        };
+      const { fname, lname, email, password } = body;
+      const reqbody = {
+        name: fname + " " + lname,
+        email: email,
+        password: password,
+        role: "student",
+      };
 
-        axios
-          .post("/auth/register", reqbody, {
-            headers: {
-              "Content-type": "application/json",
-            },
-          })
-          .then((res) => {
-            const parseRes = res.data;
-            alert(parseRes);
-            history.push("/login");
-          })
-          .catch((err) => {
-            const status = err.response.status;
-            const errData = err.response.data;
-            document.getElementById("signup-failure1").style.visibility =
-              "visible";
-            console.log("response error code", status);
-            setError(errData);
-          });
+      axios
+        .post("/auth/register", reqbody, {
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          const parseRes = res.data;
+          alert(parseRes);
+          history.push("/login");
+        })
+        .catch((err) => {
+          const status = err.response.status;
+          const errData = err.response.data;
+          document.getElementById("signup-failure1").style.visibility =
+            "visible";
+          console.log("response error code", status);
+          setError(errData);
+        });
     },
   });
 
@@ -120,9 +98,9 @@ const SignUp = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Student Sign Up
         </Typography>
-        <div id="signup-success">User Registered Successfully!</div>
+        <div id="signup-success">Student Registered Successfully!</div>
         <div id="signup-failure1">{error}</div>
         <br></br>
         <form onSubmit={formik.handleSubmit}>

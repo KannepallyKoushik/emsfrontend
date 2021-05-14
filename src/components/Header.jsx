@@ -30,13 +30,13 @@ const useStyles = makeStyles({
 });
 
 const navLinks = [
-  { title: `Login`, path: `/login` },
-  { title: `SignUp`, path: `/register` },
-  { title: `Report`, path: `/report` }
+  { title: `Student Login`, path: `/login` },
+  { title: `Student SignUp`, path: `/register` },
+  { title: `Report Issue`, path: `/report` }
 ];
 
 const homeLink = [
-    { title: `EMS`, path : `/`}
+    { title: `EMS Home`, path : `/`}
 ];
 
 const Header = () => {

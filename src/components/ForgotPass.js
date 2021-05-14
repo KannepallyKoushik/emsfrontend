@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import "../App.css";
 import axios from "../axios";
 import ForgotPassValidator from "./Validators/ForgotPassValidator";
+import { Report, Copyright } from "./Footer";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -16,30 +17,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-function Report() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Report an Issue with the Website "}
-      <Link color="inherit" to="/report">
-        Here
-      </Link>{" "}
-    </Typography>
-  );
-}
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" to="/login">
-        Elective Management System
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,29 +52,29 @@ const ForgotPass = () => {
     initialValues,
     validationSchema: ForgotPassValidator,
     onSubmit: (body) => {
-        axios
-          .post("/auth/forgotpassword", body, {
-            headers: {
-              "Content-type": "application/json",
-            },
-          })
-          .then((res) => {
-            const status = res.status;
+      axios
+        .post("/auth/forgotpassword", body, {
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+        .then((res) => {
+          const status = res.status;
 
-            if (status === 200 || 201) {
-              alert("Reset Password link sent to your email.");
+          if (status === 200 || 201) {
+            alert("Reset Password link sent to your email.");
 
-              history.push("/login");
-            }
-          })
-          .catch((er) => {
-            const status = er.response.status;
-            const errData = er.response.data;
-            document.getElementById("forgotpassword-failure").style.visibility =
-              "visible";
-            console.log("response error code", status);
-            setError(errData);
-          });
+            history.push("/login");
+          }
+        })
+        .catch((er) => {
+          const status = er.response.status;
+          const errData = er.response.data;
+          document.getElementById("forgotpassword-failure").style.visibility =
+            "visible";
+          console.log("response error code", status);
+          setError(errData);
+        });
     },
   });
 

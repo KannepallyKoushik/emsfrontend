@@ -14,11 +14,11 @@ import Home from "./components/Home";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
-import AdminSignIn from "./components/AdminSignIn";
 import ReportForm from "./components/ReportForm";
 import ChangePass from "./components/ChangePass";
 import ForgotPass from "./components/ForgotPass";
 import VerifyEmail from "./components/VerifyEmail";
+import PageNotFound from "./components/404-page";
 
 function App() {
   const checkAuthenticated = async () => {
@@ -89,17 +89,6 @@ function App() {
           />
           <Route
             exact
-            path="/admin/login"
-            render={(props) =>
-              !isAuthenticated ? (
-                <AdminSignIn {...props} setAuth={setAuth} />
-              ) : (
-                <Redirect to="/dashboard" />
-              )
-            }
-          />
-          <Route
-            exact
             path="/register"
             render={(props) =>
               !isAuthenticated ? (
@@ -120,6 +109,7 @@ function App() {
               )
             }
           />
+          <Route component={PageNotFound} />
         </Switch>
       </Router>
     </Fragment>
