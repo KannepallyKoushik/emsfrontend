@@ -5,14 +5,13 @@ const SignupValidator = yup.object({
   lname: yup.string(),
   email: yup
     .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: yup.string()
-    .min(8, "Minimum 8 characters")
-    .required("Required!"),
-  confirmpass: yup.string()
+    .length(16, "University Roll Number Must have 16 digits")
+    .required("Roll Number is Required"),
+  password: yup.string().min(8, "Minimum 8 characters").required("Required!"),
+  confirmpass: yup
+    .string()
     .oneOf([yup.ref("password")], "Password's not match")
-    .required("Required!")
+    .required("Required!"),
 });
 
 export default SignupValidator;

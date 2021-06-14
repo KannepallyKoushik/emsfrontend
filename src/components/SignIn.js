@@ -7,7 +7,7 @@ import "../App.css";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { TextField, InputAdornment } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -57,7 +57,8 @@ const SignIn = ({ setAuth }) => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    const body = { email, password, role: "student" };
+    const mail = email.toLowerCase() + "@cb.students.amrita.edu";
+    const body = { email: mail, password };
     axios
       .post("/auth/login", body, {
         headers: {
@@ -109,12 +110,19 @@ const SignIn = ({ setAuth }) => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Roll Number"
               name="email"
-              autoComplete="email"
+              autoComplete="off"
               autoFocus
               value={email}
               onChange={(e) => onChange(e)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <div class="adornment">@cb.students.amrita.edu</div>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant="outlined"
@@ -129,7 +137,6 @@ const SignIn = ({ setAuth }) => {
               value={password}
               onChange={(e) => onChange(e)}
             />
-
             <Button
               type="submit"
               fullWidth

@@ -9,7 +9,7 @@ import SignupValidator from "./Validators/SignupValidator";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { TextField, InputAdornment } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -56,9 +56,8 @@ const SignUp = () => {
       const { fname, lname, email, password } = body;
       const reqbody = {
         name: fname + " " + lname,
-        email: email,
+        email: email.toLowerCase() + "@cb.students.amrita.edu",
         password: password,
-        role: "student",
       };
 
       axios
@@ -141,11 +140,18 @@ const SignUp = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Roll Number"
                 name="email"
-                autoComplete="email"
+                autoComplete="off"
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <div class="adornment">@cb.students.amrita.edu</div>
+                    </InputAdornment>
+                  ),
+                }}
               />
               {formik.errors.email && formik.touched.email && (
                 <p class="errors">{formik.errors.email}</p>

@@ -73,7 +73,7 @@ const Dashboard = ({ setAuth }) => {
     }
   };
 
-  function StudentDash() {
+  const StudentDash = () => {
     return (
       <div>
         <h1>Student Dashboard</h1>
@@ -83,9 +83,9 @@ const Dashboard = ({ setAuth }) => {
         </button>
       </div>
     );
-  }
+  };
 
-  return role === "student" ? <StudentDash /> : <PageNotFound />;
+  return role === "student" ? StudentDash() : <PageNotFound />;
 };
 
 export default Dashboard;

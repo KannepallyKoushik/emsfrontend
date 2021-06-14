@@ -186,3 +186,10 @@ label.error {
   color: #ef4339;
   font-size: 14px;
 }
+
+.adornment {
+  background-color: #d0d0db;
+  padding: 21px 8px;
+  margin-right: -14px;
+  margin-top: -5px;
+}
