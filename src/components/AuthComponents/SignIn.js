@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "../axios";
-import "../App.css";
+
+import axios from "../../axios";
+import "../../App.css";
+import { Report, Copyright } from "../Footer";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -15,7 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { Report, Copyright } from "./Footer";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = ({ setAuth }) => {
+const SignIn = () => {
+  const [, setIsAuthenticated] = useContext(AuthContext);
+
   const [error, setError] = useState("");
   const [inputs, setInputs] = useState({
     email: "",
@@ -69,12 +73,12 @@ const SignIn = ({ setAuth }) => {
         const parseRes = res.data;
         if (parseRes.token) {
           localStorage.setItem("token", parseRes.token);
-          setAuth(true);
+          setIsAuthenticated(true);
           toast.success("LoggedIn Successfully");
         }
       })
       .catch((er) => {
-        setAuth(false);
+        setIsAuthenticated(false);
         const status = er.response.status;
         const errData = er.response.data;
         document.getElementById("signup-failure1").style.visibility = "visible";

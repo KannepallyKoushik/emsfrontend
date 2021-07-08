@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -9,48 +9,47 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 import axios from "./axios";
+import { AuthContext } from "./Contexts/AuthContext";
+import { UserProvider } from "./Contexts/UserContext";
+import { AuthorizationProvider } from "./Contexts/AuthorizationContext";
+
 // Components
 import Home from "./components/Home";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Dashboard from "./components/Dashboard";
-import ReportForm from "./components/ReportForm";
-import ChangePass from "./components/ChangePass";
-import ForgotPass from "./components/ForgotPass";
-import VerifyEmail from "./components/VerifyEmail";
-import PageNotFound from "./components/404-page";
+import SignIn from "./components/AuthComponents/SignIn";
+import SignUp from "./components/AuthComponents/SignUp";
+import ReportForm from "./components/AuthComponents/ReportForm";
+import ChangePass from "./components/AuthComponents/ChangePass";
+import ForgotPass from "./components/AuthComponents/ForgotPass";
+import VerifyEmail from "./components/AuthComponents/VerifyEmail";
+import Dashboard from "./components/DashComponents/Dashboard";
 
 function App() {
-  const checkAuthenticated = async () => {
-    axios
-      .post(
-        "/auth/isverify",
-        { dummybody: "dummy" },
-        {
-          headers: { token: localStorage.token },
-          "Content-type": "application/json",
-        }
-      )
-      .then((res) => {
-        const parseRes = res.data;
-        parseRes === true
-          ? setIsAuthenticated(true)
-          : setIsAuthenticated(false);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  };
+  const [isAuthenticated, setIsAuthenticated] = useContext(AuthContext);
 
   useEffect(() => {
+    const checkAuthenticated = async () => {
+      axios
+        .post(
+          "/auth/isverify",
+          { dummybody: "dummy" },
+          {
+            headers: { token: localStorage.token },
+            "Content-type": "application/json",
+          }
+        )
+        .then((res) => {
+          const parseRes = res.data;
+          parseRes === true
+            ? setIsAuthenticated(true)
+            : setIsAuthenticated(false);
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
+    };
     checkAuthenticated();
-  }, []);
+  }, [setIsAuthenticated]);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const setAuth = (boolean) => {
-    setIsAuthenticated(boolean);
-  };
   return (
     <Fragment>
       <Router>
@@ -71,7 +70,7 @@ function App() {
             path="/login"
             render={(props) =>
               !isAuthenticated ? (
-                <SignIn {...props} setAuth={setAuth} />
+                <SignIn {...props} />
               ) : (
                 <Redirect to="/dashboard" />
               )
@@ -98,19 +97,27 @@ function App() {
               )
             }
           />
-          <Route
-            exact
-            path="/dashboard"
-            render={(props) =>
-              isAuthenticated ? (
-                <Dashboard {...props} setAuth={setAuth} />
-              ) : (
-                <Redirect to="/login" />
-              )
-            }
-          />
-          <Route component={PageNotFound} />
+
+          {/* <Route component={PageNotFound} /> */}
         </Switch>
+
+        <AuthorizationProvider>
+          <UserProvider>
+            <Switch>
+              <Route
+                exact
+                path="/dashboard"
+                render={(props) =>
+                  isAuthenticated ? (
+                    <Dashboard {...props} />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+            </Switch>
+          </UserProvider>
+        </AuthorizationProvider>
       </Router>
     </Fragment>
   );

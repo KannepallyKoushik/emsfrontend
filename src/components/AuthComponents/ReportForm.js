@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 
-import "../App.css";
-import axios from "../axios";
-import ReportValidator from "./Validators/ReportValidator";
-import Header from "./Header";
+import "../../App.css";
+import axios from "../../axios";
+import ReportValidator from "../Validators/ReportValidator";
+import Header from "../Header";
+import { Copyright } from "../Footer";
 
 import Box from "@material-ui/core/Box";
-
-import { Copyright } from "./Footer";
 
 export default function ReportForm() {
   const initialValues = {

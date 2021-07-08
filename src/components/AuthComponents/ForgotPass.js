@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Link, useHistory } from "react-router-dom";
 
-import "../App.css";
-import axios from "../axios";
-import ForgotPassValidator from "./Validators/ForgotPassValidator";
-import { Report, Copyright } from "./Footer";
+import "../../App.css";
+import axios from "../../axios";
+import ForgotPassValidator from "../Validators/ForgotPassValidator";
+import { Report, Copyright } from "../Footer";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
