@@ -22,6 +22,8 @@ import ChangePass from "./components/AuthComponents/ChangePass";
 import ForgotPass from "./components/AuthComponents/ForgotPass";
 import VerifyEmail from "./components/AuthComponents/VerifyEmail";
 import Dashboard from "./components/DashComponents/Dashboard";
+import SetPassword from "./components/DashComponents/SetPassword";
+import Profile from "./components/DashComponents/Profile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useContext(AuthContext);
@@ -113,6 +115,22 @@ function App() {
                   ) : (
                     <Redirect to="/login" />
                   )
+                }
+              />
+
+              <Route
+                exact
+                path="/dashboard/setPassword"
+                render={() =>
+                  isAuthenticated ? <SetPassword /> : <Redirect to="/login" />
+                }
+              />
+
+              <Route
+                exact
+                path="/dashboard/profile"
+                render={() =>
+                  isAuthenticated ? <Profile /> : <Redirect to="/login" />
                 }
               />
             </Switch>

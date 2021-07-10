@@ -1,18 +1,29 @@
 import React, { useContext, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
 
 import "../../App.css";
 import axios from "../../axios";
 import NotStudent from "./NotStudent";
+import Main from "./Main";
+import "./Styles.css";
 
 import { AuthContext } from "../../Contexts/AuthContext";
 import { UserContext } from "../../Contexts/UserContext";
 import { AuthorizationContext } from "../../Contexts/AuthorizationContext";
 
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import { Container } from "@material-ui/core";
+
 const Dashboard = () => {
   const [authorised, setauthorised] = useContext(AuthorizationContext);
   const [, setIsAuthenticated] = useContext(AuthContext);
-  const [user, setUser] = useContext(UserContext);
+  const [, setUser] = useContext(UserContext);
+
+  const history = useHistory();
 
   const logout = async (e) => {
     try {
@@ -37,6 +48,15 @@ const Dashboard = () => {
           const stringRes = JSON.stringify(res.data);
           setauthorised(true);
           setUser(stringRes);
+          for (var key in res.data) {
+            if (res.data[key] == null) {
+              setTimeout(function () {
+                alert("Please Update your basic Details");
+                history.push("/dashboard/profile");
+              }, 1000);
+              break;
+            }
+          }
         })
         .catch((er) => {
           console.log(er.response);
@@ -52,17 +72,54 @@ const Dashboard = () => {
         });
     };
     getData();
-  }, [setUser, setIsAuthenticated, setauthorised]);
+  }, [setUser, setIsAuthenticated, setauthorised, history]);
 
   const StudentDash = () => {
     return (
-      <div>
+      <div className="StudentDash">
+        <CssBaseline />
         <ToastContainer />
-        <h1>Student Dashboard</h1>
-        <h5>Welcome {user}</h5>
-        <button onClick={(e) => logout(e)} className="btn btn-primary">
-          Logout
-        </button>
+        <Main logout={logout} />
+        <Container maxWidth="xl">
+          <h4 class="amma-quote">
+            <i>
+              "ENLIGHTENMENT means the ability to RECOGNISE ONESELF in ALL
+              living creatures"
+            </i>{" "}
+            - AMMA
+          </h4>
+          <Grid container>
+            <Grid
+              item
+              xs={7}
+              container
+              spacing={0}
+              direction="column"
+              style={{ paddingTop: "60px", paddingLeft: "250px" }}
+            >
+              <h5 align="left">EMS-Student Portal Walkthrough Video</h5>
+              <br></br>
+              <iframe
+                title="student walkthrough"
+                width="720"
+                height="420"
+                align="center"
+                src="https://www.youtube.com/embed/tgbNymZ7vqY"
+              ></iframe>
+            </Grid>
+            <Grid
+              item
+              xs={5}
+              style={{ paddingLeft: "250px", paddingTop: "100px" }}
+            >
+              <h5>Course Cirriculum:</h5>
+              <h6>view</h6>
+              <br></br>
+              <h5>Calendar:</h5>
+              <DayPicker />
+            </Grid>
+          </Grid>
+        </Container>
       </div>
     );
   };
