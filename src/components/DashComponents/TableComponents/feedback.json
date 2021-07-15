@@ -1,0 +1,30 @@
+[{
+  "id": "1",
+  "Faculty Name": "V.B.",
+  "Feedback": "sample link1",
+  "Batch": "2020"
+},
+{
+  "id": "2",
+  "Faculty Name": "CSV",
+  "Feedback": "xyz",
+  "Batch": "2020"
+},
+{
+  "id": "3",
+  "Faculty Name": "R",
+  "Feedback": "sample",
+  "Batch": "2020"
+},
+{
+  "id": "4",
+  "Faculty Name": "D",
+  "Feedback": "sample",
+  "Batch": "2020"
+},
+{
+  "id": "4",
+  "Faculty Name": "E",
+  "Feedback": "sample",
+  "Batch": "2020"
+}]

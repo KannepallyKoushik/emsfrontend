@@ -24,6 +24,12 @@ import VerifyEmail from "./components/AuthComponents/VerifyEmail";
 import Dashboard from "./components/DashComponents/Dashboard";
 import SetPassword from "./components/DashComponents/SetPassword";
 import Profile from "./components/DashComponents/Profile";
+import Notifications from "./components/DashComponents/Notifications";
+import FeedbackList from "./components/DashComponents/FeedbackList";
+import ElectivesList from "./components/DashComponents/ElectivesList";
+import SubmitFeedback from "./components/DashComponents/SubmitFeedback";
+import SubmitPreferences from "./components/DashComponents/SubmitPreferences";
+import WriteFeedback from "./components/DashComponents/WriteFeedback";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useContext(AuthContext);
@@ -78,6 +84,7 @@ function App() {
               )
             }
           />
+
           <Route
             exact
             path="/report"
@@ -131,6 +138,56 @@ function App() {
                 path="/dashboard/profile"
                 render={() =>
                   isAuthenticated ? <Profile /> : <Redirect to="/login" />
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/notifications"
+                render={() =>
+                  isAuthenticated ? <Notifications /> : <Redirect to="/login" />
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/feedbacklist/:id"
+                render={() =>
+                  isAuthenticated ? <FeedbackList /> : <Redirect to="/login" />
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/submitfeedback/writefeedback/:id"
+                render={() =>
+                  isAuthenticated ? <WriteFeedback /> : <Redirect to="/login" />
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/electiveslist"
+                render={() =>
+                  isAuthenticated ? <ElectivesList /> : <Redirect to="/login" />
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/submitfeedback/:id"
+                render={() =>
+                  isAuthenticated ? (
+                    <SubmitFeedback />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/submitpreferences/:id"
+                render={(props) =>
+                  isAuthenticated ? (
+                    <SubmitPreferences {...props} />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
                 }
               />
             </Switch>

@@ -1,0 +1,20 @@
+[{
+  "id": "1",
+  "Course Name": "Distributed Systems",
+  "Approval Status": "Waiting"
+},
+{
+  "id": "2",
+  "Course Name": "Deep Learning",
+  "Approval Status": "Waiting"
+},
+{
+  "id": "3",
+  "Course Name": "Machine Learning",
+  "Approval Status": "Waiting"
+},
+{
+  "id": "4",
+  "Course Name": "MLBD",
+  "Approval Status": "Waiting"
+}]

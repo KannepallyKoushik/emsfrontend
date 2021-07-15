@@ -266,17 +266,49 @@ class MiniDrawer extends React.Component {
         >
           <div className={classes.toolbar} />
           <List>
-            <ListItem button key={"Allocation Status"}>
-              <ListItemIcon>
-                <CheckBoxIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Allocation Status"} />
+            <ListItem button key={"My Electives"}>
+              <Link
+                to="/dashboard/electiveslist"
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                <ListItemIcon>
+                  <CheckBoxIcon />
+                </ListItemIcon>
+              </Link>
+              <Link
+                to="/dashboard/electiveslist"
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                <ListItemText primary={"My Electives"} />
+              </Link>
             </ListItem>
             <ListItem button key={"Notifications"}>
-              <ListItemIcon>
-                <NotificationsIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Notifications"} />
+              <Link
+                to="/dashboard/notifications"
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                <ListItemIcon>
+                  <NotificationsIcon />
+                </ListItemIcon>
+              </Link>
+              <Link
+                to="/dashboard/notifications"
+                style={{
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                <ListItemText primary={"Notifications"} />
+              </Link>
             </ListItem>
           </List>
           <Divider />

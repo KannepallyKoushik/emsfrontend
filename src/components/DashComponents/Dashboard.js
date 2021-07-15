@@ -52,7 +52,7 @@ const Dashboard = () => {
             if (res.data[key] == null) {
               setTimeout(function () {
                 alert("Please Update your basic Details");
-                history.push("/dashboard/profile");
+                // history.push("/dashboard/profile");
               }, 1000);
               break;
             }
@@ -100,11 +100,13 @@ const Dashboard = () => {
               <h5 align="left">EMS-Student Portal Walkthrough Video</h5>
               <br></br>
               <iframe
-                title="student walkthrough"
-                width="720"
-                height="420"
-                align="center"
-                src="https://www.youtube.com/embed/tgbNymZ7vqY"
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/FOtuGXMNjM0"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
               ></iframe>
             </Grid>
             <Grid
@@ -113,7 +115,13 @@ const Dashboard = () => {
               style={{ paddingLeft: "250px", paddingTop: "100px" }}
             >
               <h5>Course Cirriculum:</h5>
-              <h6>view</h6>
+              <a
+                href="https://drive.google.com/drive/folders/171JAJgMYJ4RkWdTZ_BQ5In1c_BaLKMdr?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h6>Here</h6>
+              </a>
               <br></br>
               <h5>Calendar:</h5>
               <DayPicker />

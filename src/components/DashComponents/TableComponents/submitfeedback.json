@@ -1,0 +1,39 @@
+[{
+  "id": "1",
+  "Course_Code": "A",
+  "Course Name": "Distributed Systems",
+  "Faculty Name": "V.B.",
+  "Submit Feedback Link": ""
+},
+{
+  "id": "2",
+  "Course_Code": "B",
+  "Course Name": "Deep Learning",
+  "Faculty Name": "CSV",
+  "Faculty Email": "abc",
+  "Submit Feedback Link": ""
+},
+{
+  "id": "3",
+  "Course_Code": "C",
+  "Course Name": "Machine Learning",
+  "Faculty Name": "R",
+  "Faculty Email": "abc",
+  "Submit Feedback Link": ""
+},
+{
+  "id": "4",
+  "Course_Code": "D",
+  "Course Name": "MLBD",
+  "Faculty Name": "D",
+  "Faculty Email": "abc",
+  "Submit Feedback Link": ""
+},
+{
+  "id": "5",
+  "Course_Code": "E",
+  "Course Name": "ML",
+  "Faculty Name": "E",
+  "Faculty Email": "abc",
+  "Submit Feedback Link": ""
+}]
